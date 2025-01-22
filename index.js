@@ -1,3 +1,4 @@
+require('dotenv').config();
 const puppeteer = require('puppeteer');
 const axios = require('axios');
 
@@ -11,16 +12,18 @@ async function checkPage() {
     const page = await browser.newPage();
     await page.goto('https://www.tce.sp.gov.br/noticias');
 
-    // Extrair as notícias (ajuste o seletor conforme necessário)
+    // Usando o seletor correto para pegar os títulos das notícias
     const newContent = await page.evaluate(() => {
-      const titles = Array.from(document.querySelectorAll('.node-title a')).map(el => el.textContent.trim());
+      const titles = Array.from(document.querySelectorAll('div.field--label-hidden.field--item h2 a')).map(el => el.textContent.trim());
       return titles.slice(0, 5); // Pega os 5 primeiros títulos
     });
 
     console.log('Novidades:', newContent);
 
+    const webhookUrl = process.env.WEBHOOK_URL;
+
     // Enviar os dados para o webhook do Make.com
-    await axios.post('https://hook.make.com/SEU-WEBHOOK', {
+    await axios.post(webhookUrl, {
       message: 'Página atualizada!',
       data: newContent,
     });
