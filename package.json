@@ -1,13 +1,15 @@
 {
-  "name": "puppeteer-monitor",
+  "name": "tce-sp-checker",
   "version": "1.0.0",
+  "description": "Projeto que verifica atualizações na página de notícias do TCE-SP.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "puppeteer": "^21.0.0",
-    "axios": "^1.0.0"
-  }
+    "axios": "^1.5.0",
+    "cheerio": "^1.0.0-rc.12"
+  },
+  "author": "vitor",
+  "license": "MIT"
 }
-
