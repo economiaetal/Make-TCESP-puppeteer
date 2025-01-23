@@ -1,11 +1,12 @@
-   name: Run Node.js Project Hourly
+name: Run Node.js Script
 
    on:
+     workflow_dispatch:  # Permite que o fluxo seja executado manualmente
      schedule:
-       - cron: '0 * * * *'  # Executa a cada uma hora
+       - cron: '*/2 * * * *'  # Executa a cada 2 minutos (para testagem, recomenda-se usar um intervalo maior em produção, como 1 hora: '0 * * * *')
 
    jobs:
-     run-script:
+     run:
        runs-on: ubuntu-latest
 
        steps:
@@ -15,11 +16,10 @@
        - name: Set up Node.js
          uses: actions/setup-node@v3
          with:
-           node-version: '14'  # Substitua pela versão que você precisa
+           node-version: '14'  # Ou qualquer versão que seu projeto exija
 
        - name: Install dependencies
          run: npm install
 
        - name: Run script
-         run: node index.js  # Substitua pelo seu script principal, se não for index.js
-  
+         run: node index.js  # Ou o nome do seu arquivo JavaScript
