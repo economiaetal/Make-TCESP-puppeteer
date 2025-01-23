@@ -1,25 +1,25 @@
 name: Run Node.js Script
 
-on:
-  workflow_dispatch:  # Permite que o fluxo seja executado manualmente
-  schedule:
-    - cron: '*/2 * * * *'  # Executa a cada 2 minutos (apenas para testes)
+   on:
+     workflow_dispatch:
+     schedule:
+       - cron: '*/2 * * * *'  # Executa a cada 2 minutos (apenas para testes)
 
-jobs:
-  run:
-    runs-on: ubuntu-latest
+   jobs:
+     run:
+       runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+       steps:
+         - name: Checkout repository
+           uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'  # Node.js 18+ suporta nativamente ReadableStream
+         - name: Set up Node.js
+           uses: actions/setup-node@v3
+           with:
+             node-version: '18'  # Certifique-se de estar usando Node.js 18 ou superior
 
-    - name: Install dependencies
-      run: npm install
+         - name: Install dependencies
+           run: npm ci  # Usar ci se tiver package-lock.json para instalação rápida
 
-    - name: Run script
-      run: node index.js  # Ou o nome do seu arquivo JavaScript
+         - name: Run script
+           run: node index.js  # Ou o nome do seu arquivo JavaScript
