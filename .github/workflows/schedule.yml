@@ -19,7 +19,15 @@ jobs:
           node-version: '18'  # Certifique-se de estar usando Node.js 18 ou superior
 
       - name: Install dependencies
-        run: npm ci  # Usar ci se tiver package-lock.json para instalação rápida
+        run: npm install  # Use npm install na primeira vez para gerar o package-lock.json
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Run script
         run: node index.js  # Ou o nome do seu arquivo JavaScript
