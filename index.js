@@ -40,7 +40,7 @@ const checkForUpdates = async () => {
 };
 
 // Verifica atualizações a cada 1 hora
-setInterval(checkForUpdates, 60 * 60 * 1000);
+setInterval(checkForUpdates, 2 * 60 * 1000);
 
 // Primeira execução ao iniciar o script
 checkForUpdates();
