@@ -1,41 +1,32 @@
-require('dotenv').config();
-const puppeteer = require('puppeteer');
-const axios = require('axios');
+const axios = require("axios");
+const cheerio = require("cheerio");
 
-async function checkPage() {
+// Armazena o último título do post para comparar
+let lastTitle = "";
+
+const checkForUpdates = async () => {
   try {
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
+    // Faz o GET na página
+    const { data } = await axios.get("https://www.tce.sp.gov.br/noticias");
+    const $ = cheerio.load(data);
 
-    const page = await browser.newPage();
-    await page.goto('https://www.tce.sp.gov.br/noticias');
+    // Seleciona o título do primeiro post (ajuste o seletor conforme a estrutura da página)
+    const firstPostTitle = $("h3.node-title").first().text().trim();
 
-    // Usando o seletor correto para pegar os títulos das notícias
-    const newContent = await page.evaluate(() => {
-      const titles = Array.from(document.querySelectorAll('div.field--label-hidden.field--item h2 a')).map(el => el.textContent.trim());
-      return titles.slice(0, 5); // Pega os 5 primeiros títulos
-    });
-
-    console.log('Novidades:', newContent);
-
-    const webhookUrl = process.env.WEBHOOK_URL;
-
-    // Enviar os dados para o webhook do Make.com
-    await axios.post(webhookUrl, {
-      message: 'Página atualizada!',
-      data: newContent,
-    });
-
-    await browser.close();
+    // Verifica se há um novo post
+    if (firstPostTitle && firstPostTitle !== lastTitle) {
+      console.log(`Novo post detectado: "${firstPostTitle}"`);
+      lastTitle = firstPostTitle;
+    } else {
+      console.log("Nenhum novo post encontrado.");
+    }
   } catch (error) {
-    console.error('Erro ao verificar a página:', error.message);
+    console.error("Erro ao acessar a página:", error.message);
   }
-}
+};
 
-// Rodar o script a cada 10 minutos (600.000 ms)
-setInterval(() => {
-  console.log('Verificando atualizações na página...');
-  checkPage();
-}, 10 * 60 * 1000); // 10 minutos em milissegundos
+// Verifica atualizações a cada 1 hora
+setInterval(checkForUpdates, 60 * 60 * 1000);
+
+// Primeira execução ao iniciar o script
+checkForUpdates();
