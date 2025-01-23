@@ -1,25 +1,26 @@
+
 name: Run Node.js Script
 
-   on:
-     workflow_dispatch:  # Permite que o fluxo seja executado manualmente
-     schedule:
-       - cron: '*/2 * * * *'  # Executa a cada 2 minutos (para testagem, recomenda-se usar um intervalo maior em produção, como 1 hora: '0 * * * *')
+on:
+  workflow_dispatch:  # Permite que o fluxo seja executado manualmente
+  schedule:
+    - cron: '*/2 * * * *'  # Executa a cada 2 minutos (apenas para testes)
 
-   jobs:
-     run:
-       runs-on: ubuntu-latest
+jobs:
+  run:
+    runs-on: ubuntu-latest
 
-       steps:
-       - name: Checkout repository
-         uses: actions/checkout@v2
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-       - name: Set up Node.js
-         uses: actions/setup-node@v3
-         with:
-           node-version: '14'  # Ou qualquer versão que seu projeto exija
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'  # Ou qualquer versão que seu projeto exija
 
-       - name: Install dependencies
-         run: npm install
+    - name: Install dependencies
+      run: npm install
 
-       - name: Run script
-         run: node index.js  # Ou o nome do seu arquivo JavaScript
+    - name: Run script
+      run: node index.js  # Ou o nome do seu arquivo JavaScript
