@@ -1,4 +1,3 @@
-
 name: Run Node.js Script
 
 on:
@@ -17,7 +16,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '14'  # Ou qualquer versão que seu projeto exija
+        node-version: '16'  # Atualize para uma versão que suporte a sintaxe desejada
 
     - name: Install dependencies
       run: npm install
