@@ -1,6 +1,9 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 
+// URL do webhook Make.com
+const webhookUrl = "https://hook.eu2.make.com/57co57jafevp7bb5sypaqpnajra5t7x1";
+
 // Armazena o último título do post para comparar
 let lastTitle = "";
 
@@ -17,6 +20,17 @@ const checkForUpdates = async () => {
     if (firstPostTitle && firstPostTitle !== lastTitle) {
       console.log(`Novo post detectado: "${firstPostTitle}"`);
       lastTitle = firstPostTitle;
+
+      // Envia para o webhook do Make.com
+      try {
+        const response = await axios.post(webhookUrl, {
+          title: firstPostTitle
+        });
+        console.log('Webhook enviado com sucesso:', response.status);
+      } catch (error) {
+        console.error('Erro ao enviar webhook:', error.message);
+      }
+      
     } else {
       console.log("Nenhum novo post encontrado.");
     }
