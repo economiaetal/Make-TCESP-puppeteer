@@ -3,7 +3,7 @@ name: Run Node.js Script
 on:
   workflow_dispatch:  # Permite que o fluxo seja executado manualmente
   schedule:
-     - cron: '0 * * * *'  # Executa a cada hora
+     - cron: '*/2 * * * *'  # Executa a cada hora
 
 jobs:
   run:
