@@ -3,7 +3,7 @@ name: Run Node.js Script
 on:
   workflow_dispatch:  # Permite que o fluxo seja executado manualmente
   schedule:
-     - cron: '*/10 * * * *'  # Executa a cada hora
+     - cron: '*/10 * * * *'  # Executa a cada 10 minutos
 
 jobs:
   run:
@@ -19,7 +19,7 @@ jobs:
           node-version: '18'  # Certifique-se de estar usando Node.js 18 ou superior
 
       - name: Install dependencies
-        run: npm install  # Use npm install na primeira vez para gerar o package-lock.json
+        run: npm install
 
       - name: Cache node modules
         uses: actions/cache@v3
