@@ -4,11 +4,12 @@
   "description": "Projeto que verifica atualizações na página de notícias do TCE-SP.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "echo \"No tests specified\" && exit 0"
   },
   "dependencies": {
     "axios": "^1.5.0",
-    "cheerio": "^1.0.0-rc.12"
+    "cheerio": "^1.0.0"
   },
   "author": "vitor",
   "license": "MIT"
