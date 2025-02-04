@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 
 const url = 'https://www.tce.sp.gov.br/noticias';
-const webhookUrl = 'https://hook.eu2.make.com/57co57jafevp7bb5sypaqpnajra5t7x1'; // Substitua pelo seu webhook
+const webhookUrl = 'https://hook.us2.make.com/tcb3qfsh980wnh2lvaclqw9ec2vilbz2'; // Substitua pelo seu webhook
 const lastPostFile = 'lastPost.json'; // Arquivo para armazenar a última postagem
 
 async function getLastSavedPost() {
