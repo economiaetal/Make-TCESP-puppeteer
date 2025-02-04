@@ -3,6 +3,74 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 
 const url = 'https://www.tce.sp.gov.br/noticias';
+const webhookUrl = 'https://hook.us2.make.com/tcb3qfsh980wnh2lvaclqw9ec2vilbz2'; // Substitua pelo seu webhook
+const lastPostFile = 'lastPost.json'; // Arquivo para armazenar a última postagem
+
+async function getLastSavedPost() {
+    try {
+        if (fs.existsSync(lastPostFile)) {
+            const data = fs.readFileSync(lastPostFile, 'utf8');
+            return JSON.parse(data).lastPost || null;
+        }
+    } catch (error) {
+        console.error('Erro ao ler arquivo de últimas postagens:', error);
+    }
+    return null;
+}
+
+async function saveLastPost(postTitle) {
+    try {
+        fs.writeFileSync(lastPostFile, JSON.stringify({ lastPost: postTitle }), 'utf8');
+    } catch (error) {
+        console.error('Erro ao salvar última postagem:', error);
+    }
+}
+
+async function checkForNewPosts() {
+    try {
+        const response = await axios.get(url);
+        const $ = cheerio.load(response.data);
+        
+        let latestPostTitle = null;
+
+        // Seleciona a postagem mais recente da página
+        const firstPost = $('div.field--label-hidden.field--item h2 a').first();
+        if (firstPost.length) {
+            latestPostTitle = firstPost.text().trim();
+        }
+
+        if (!latestPostTitle) {
+            console.log('Nenhuma postagem encontrada.');
+            return;
+        }
+
+        // Obtém a última postagem salva
+        const lastSavedPost = await getLastSavedPost();
+
+        // Se a postagem mais recente for diferente da última salva, dispara o webhook
+        if (lastSavedPost !== latestPostTitle) {
+            // Envia para o webhook o título da nova postagem
+            await axios.post(webhookUrl, { title: latestPostTitle });
+            console.log('Webhook disparado com a nova postagem:', latestPostTitle);
+            await saveLastPost(latestPostTitle); // Salva a nova postagem mais recente
+        } else {
+            console.log('Nenhuma nova postagem encontrada.');
+        }
+    } catch (error) {
+        console.error('Erro ao verificar postagens:', error);
+    }
+}
+
+checkForNewPosts();
+
+
+
+/*
+const axios = require('axios');
+const cheerio = require('cheerio');
+const fs = require('fs');
+
+const url = 'https://www.tce.sp.gov.br/noticias';
 const webhookUrl = 'https://hook.us2.make.com/vpndpi5zoypp5fzbroipmx37dauurc1d'; // Substitua pelo seu webhook
 const lastPostFile = 'lastPost.json'; // Arquivo para armazenar a última postagem
 
@@ -66,7 +134,7 @@ async function checkForNewPosts() {
 
 checkForNewPosts();
 
-
+*/
 
 /*
 const axios = require('axios');
