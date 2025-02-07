@@ -1,4 +1,13 @@
-const axios = require('axios');
+const fs = require('fs');
+
+const lastPostFile = 'lastPost.json';
+const testPostTitle = 'Teste de gravação';
+
+// Tenta salvar manualmente um título no JSON
+fs.writeFileSync(lastPostFile, JSON.stringify({ lastPost: testPostTitle }), 'utf8');
+
+console.log('✅ Arquivo atualizado com sucesso!');
+/*const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require('fs');
 
