@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const lastPostFile = 'lastPost.json';
-const testPostTitle = 'Teste de gravação';
+const testPostTitle = 'Teste de gravação 2';
 
 // Tenta salvar manualmente um título no JSON
 fs.writeFileSync(lastPostFile, JSON.stringify({ lastPost: testPostTitle }), 'utf8');
