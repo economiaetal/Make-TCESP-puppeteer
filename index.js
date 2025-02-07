@@ -6,7 +6,7 @@ const testPostTitle = 'Teste de gravação 2';
 // Tenta salvar manualmente um título no JSON
 fs.writeFileSync(lastPostFile, JSON.stringify({ lastPost: testPostTitle }), 'utf8');
 
-console.log('✅ Arquivo atualizado com sucesso!');
+console.log('✅ Arquivo atualizado com sucesso 2!');
 /*const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require('fs');
