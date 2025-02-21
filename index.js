@@ -4,7 +4,8 @@ const fs = require('fs');
 
 const url = 'https://www.tce.sp.gov.br/noticias';
 //const webhookUrl = 'https://hook.us2.make.com/vpndpi5zoypp5fzbroipmx37dauurc1d'; // Substitua pelo seu webhook
-const webhookUrl = 'https://hook.eu2.make.com/gt8a3ishh1cz8rhq82ugm29bgem9tbd1'; //vtrmake@gmail.com
+//const webhookUrl = 'https://hook.eu2.make.com/gt8a3ishh1cz8rhq82ugm29bgem9tbd1'; //vtrmake@gmail.com
+const webhookUrl = 'https://hook.us2.make.com/h7kgar8gc7urjxan3ky8g4siydgtqm6i' //lucavtr2@gmail.com
 const lastPostFile = 'lastPost.json'; // Arquivo para armazenar a última postagem
 
 async function getLastSavedPost() {
